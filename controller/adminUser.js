@@ -97,5 +97,20 @@ router.get('/', auth, async (req, res, next) => {
     }
 })
 
+// 删除管理员
+router.post("/del", async (req, res, next) => {
+    try{
+        const {_id} = req.body;
 
+        const dataList = await adminUserModel.remove({_id: _id})
+
+        res.json({
+            data: dataList,
+            code: 200,
+            msg: "删除成功"
+        })
+    }catch(err) {
+        next(err)
+    }
+})
 module.exports = router;

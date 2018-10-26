@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const swiperModel = require('../model/news')
+const swiperModel = require('../model/swiper')
 const auth = require('./auth')
 
 // 添加轮播图
@@ -42,7 +42,8 @@ router.get('/', auth, async (req, res, next) => {
         const dataList = await swiperModel.find()
             .skip((page-1)*page_size)
             .limit(page_size)
-            .sort({_id: -1})
+            .sort({sort: -1, _id: -1})
+            .populate({path: 'newsId'})
 
         res.json({
             code: 200,
@@ -67,6 +68,38 @@ router.get('/:id', async (req, res, next) => {
             msg: 'success'
         })
     }catch(err) {
+        next(err)
+    }
+})
+
+// 编辑轮播图
+router.patch('/:id', auth, async (req,res,next)=>{
+    try{
+        const {id} = req.params
+        let {
+            title,
+            img,
+            newsId,
+            status,
+            sort
+        } = req.body
+
+        const data = await swiperModel.findById(id)
+
+        const updateData = await data.update({$set: {
+            title,
+            img,
+            newsId,
+            status,
+            sort
+        }})
+
+        res.json({
+            code: 200,
+            updateData,
+            msg: '修改轮播图成功'
+        })
+    }catch(err){
         next(err)
     }
 })

@@ -5,13 +5,13 @@ const news = new mongoose.Schema({
     content: String,
     contentText: String,
     img: String,
-    author:{
+    author: {
         type: mongoose.SchemaTypes.ObjectId,
         ref: 'admin_user'      
     },
     type: {
         type: mongoose.SchemaTypes.ObjectId,
-        ref: 'category' // 与分类相关联
+        ref: 'category' // 与分类表相关联
     },
     lookNum: {
         type: Number,
