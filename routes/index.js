@@ -10,6 +10,8 @@ router.use('/admin/adminUser', require('../controller/adminUser'))
 router.use('/admin/news', require('../controller/news'))
 router.use('/admin/category', require('../controller/category'))
 router.use('/admin/swiper', require('../controller/swiper'))
+router.use('/admin/interaction', require('../controller/interaction'))
+router.use('/admin/common', require('../controller/common'))
 
 
 // 鉴权登录
